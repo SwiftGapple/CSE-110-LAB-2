@@ -1,9 +1,13 @@
-import React,{ useEffect, useState } from 'react';
+import React,{ useEffect, useState, useContext } from 'react';
 import logo from './logo.svg';
 import './App.css';
 // import { Label, Note } from "./types"; // Import the Label type from the appropriate module
 import { dummyNotesList } from "./constants"; // Import the dummyNotesList from the appropriate module
 import { Label, Note } from "./types"; // Import the Label type from the appropriate module
+import { ToggleTheme } from './clickCounter';
+import { ThemeContext, themes } from './themeContext';
+
+
 
 function App() {
 
@@ -20,9 +24,7 @@ function App() {
 
   //like button
   const LikeButton = ( { currNote }: { currNote: Note }) => {
-    
     const [like, setLikes] = useState(currNote.favorite);
-
     //toggle like when the button is clicked
     const handleLike = () => {
       setLikes(currNote.favorite = !currNote.favorite);
@@ -36,14 +38,22 @@ function App() {
     );
   };
 
+  //update the list of favorite notes
   const [favListNotes, setList] = useState(notes.filter(note => note.favorite === true));
-  
   const handleSetFav = () => {
     setList(notes.filter(note => note.favorite === true))
   };
 
+  const [currentTheme, setCurrentTheme] = useState(themes.light);
+   
+  const toggleTheme = () => {
+    setCurrentTheme(currentTheme === themes.light ? themes.dark : themes.light);
+    console.log(currentTheme);
+  };
+
   return (
-    <div className='app-container'>
+    <ThemeContext.Provider value={currentTheme}>
+    <div>
       <form className="note-form">
        <div><input placeholder="Note Title"></input></div>
        <div><textarea></textarea></div>
@@ -72,8 +82,12 @@ function App() {
           <h3>{note.title}</h3>))}
      </div>
 
+     <div>
+     <h2>Toggle Theme</h2>
+          <ToggleTheme />
+     </div>
     </div>
-
+    </ThemeContext.Provider>
   );
  }
 
