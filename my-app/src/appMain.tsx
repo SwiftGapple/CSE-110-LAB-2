@@ -4,7 +4,6 @@ import './App.css';
 // import { Label, Note } from "./types"; // Import the Label type from the appropriate module
 import { dummyNotesList } from "./constants"; // Import the dummyNotesList from the appropriate module
 import { Label, Note } from "./types"; // Import the Label type from the appropriate module
-import { ToggleTheme } from './clickCounter';
 import { ThemeContext } from './themeContext';
 
 export function AppMain() {
@@ -82,7 +81,10 @@ export function AppMain() {
         padding: "20px",
       }}
 >
-  	<form className="note-form" onSubmit={createNoteHandler}>
+  	<form className="note-form" onSubmit={createNoteHandler} style={{
+        background: theme.background,
+        color: theme.foreground,
+      }}>  
     	<div>
       	<input
         	placeholder="Note Title"
@@ -126,16 +128,16 @@ export function AppMain() {
           	<button>x</button>
 
         	</div>
-            <h2 style={{ color: theme.foreground}}> {note.title} </h2>
-            <p style={{ color: theme.foreground}}> {note.content} </p>
-            <p style={{ color: theme.foreground}}> {note.label} </p>
+            <h2 style={{ color: theme.foreground}} contentEditable="true"> {note.title} </h2>
+            <p style={{ color: theme.foreground}} contentEditable="true"> {note.content} </p>
+            <p style={{ color: theme.foreground}} contentEditable="true"> {note.label} </p>
       	</div>
     	))}
-        <div className="list-fav">
+  	</div>
+      <div className="list-fav">
             <h2>List of favorites:</h2>
         {favList.map(note => (
           <h3>{note.title}</h3>))}
         </div>
-  	</div>
 	</div>  );
  }
