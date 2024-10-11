@@ -5,89 +5,24 @@ import './App.css';
 import { dummyNotesList } from "./constants"; // Import the dummyNotesList from the appropriate module
 import { Label, Note } from "./types"; // Import the Label type from the appropriate module
 import { ToggleTheme } from './clickCounter';
+import { AppMain } from './appMain';
 import { ThemeContext, themes } from './themeContext';
 
 
 
 function App() {
 
-  const [notes, setNotes] = useState(dummyNotesList); 
-  const initialNote = {
-     id: -1,
-     title: "",
-     content: "",
-     label: Label.other,
-   };
-  const [createNote, setCreateNote] = useState(initialNote);
-
-
-
-  //like button
-  const LikeButton = ( { currNote }: { currNote: Note }) => {
-    const [like, setLikes] = useState(currNote.favorite);
-    //toggle like when the button is clicked
-    const handleLike = () => {
-      setLikes(currNote.favorite = !currNote.favorite);
-      handleSetFav();
-    }
-
-    return (
-      <div>
-          <button onClick={handleLike}>{like ? '❤️' : '🤍'}</button>
-      </div>
-    );
-  };
-
-  //update the list of favorite notes
-  const [favListNotes, setList] = useState(notes.filter(note => note.favorite === true));
-  const handleSetFav = () => {
-    setList(notes.filter(note => note.favorite === true))
-  };
-
+  //toggle theme button
   const [currentTheme, setCurrentTheme] = useState(themes.light);
-   
   const toggleTheme = () => {
     setCurrentTheme(currentTheme === themes.light ? themes.dark : themes.light);
     console.log(currentTheme);
   };
 
-  return (
-    <ThemeContext.Provider value={currentTheme}>
-    <div>
-      <form className="note-form">
-       <div><input placeholder="Note Title"></input></div>
-       <div><textarea></textarea></div>
-       <div><button type="submit">Create Note</button></div>
-      </form>
-
-      <div className="notes-grid">
-       {dummyNotesList.map((note) => (
-         <div
-           key={note.id}
-           className="note-item">
-           <div className="notes-header">
-             <LikeButton currNote={note} />
-             <button>x</button>
-
-           </div>
-           <h2> {note.title} </h2>
-           <p> {note.content} </p>
-           <p> {note.label} </p>
-         </div>
-       ))}
-     </div>
-     <div className="list-fav">
-      <h2>List of favorites:</h2>
-        {favListNotes.map(note => (
-          <h3>{note.title}</h3>))}
-     </div>
-
-     <div>
-     <h2>Toggle Theme</h2>
-          <ToggleTheme />
-     </div>
-    </div>
-    </ThemeContext.Provider>
+  return (     
+  <div>
+    <ToggleTheme />
+  </div>
   );
  }
 
