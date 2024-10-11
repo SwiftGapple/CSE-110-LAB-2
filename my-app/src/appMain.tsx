@@ -15,6 +15,7 @@ export function AppMain() {
      title: "",
      content: "",
      label: Label.other,
+     favorite: false,
    };
   const [createNote, setCreateNote] = useState(initialNote);
 
@@ -57,6 +58,15 @@ export function AppMain() {
   };
 
 
+  const createNoteHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+    console.log("title: ", createNote.title);
+    console.log("content: ", createNote.content);
+    createNote.id = notes.length + 1;
+    setNotes([createNote, ...notes]);
+    setCreateNote(initialNote);
+  };
+
 //   //update the list of favorite notes
 //   const [favListNotes, setList] = useState(notes.filter(note => note.favorite === true));
 //   const handleSetFav = () => {
@@ -71,22 +81,23 @@ export function AppMain() {
         color: theme.foreground,
         padding: "20px",
       }}
+
+
       >
-      <form className="note-form">
+      <form className="note-form" onSubmit={createNoteHandler}>
        <div><input placeholder="Note Title"></input></div>
        <div><textarea></textarea></div>
        <div><button type="submit">Create Note</button></div>
       </form>
 
       <div className="notes-grid" >
-       {dummyNotesList.map((note) => (
+       {notes.map((note) => (
          <div
            key={note.id}
            className="note-item" style={{ background: theme.background}}>
            <div className="notes-header"  >
              <LikeButton currNote={note} />
              <button>x</button>
-
            </div>
            <h2 style={{ color: theme.foreground}}> {note.title} </h2>
            <p style={{ color: theme.foreground}}> {note.content} </p>
@@ -107,5 +118,3 @@ export function AppMain() {
     </div>
   );
  }
-
-
