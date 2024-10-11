@@ -76,45 +76,66 @@ export function AppMain() {
   const theme = useContext(ThemeContext);
 
   return (
-    <div      style={{
+	<div className='app-container' style={{
         background: theme.background,
         color: theme.foreground,
         padding: "20px",
       }}
+>
+  	<form className="note-form" onSubmit={createNoteHandler}>
+    	<div>
+      	<input
+        	placeholder="Note Title"
+        	onChange={(event) =>
+          	setCreateNote({ ...createNote, title: event.target.value })}
+        	required>
+      	</input>
+    	</div>
 
+    	<div>
+      	<textarea
+        	onChange={(event) =>
+          	setCreateNote({ ...createNote, content: event.target.value })}
+        	required>
+      	</textarea>
+    	</div>
 
-      >
-      <form className="note-form" onSubmit={createNoteHandler}>
-       <div><input placeholder="Note Title"></input></div>
-       <div><textarea></textarea></div>
-       <div><button type="submit">Create Note</button></div>
-      </form>
+  <div>
+     	<select
+       	onChange={(event) =>
+         	setCreateNote({ ...createNote, label: event.target.value as Label })}
+       	required>
+       	<option value={Label.personal}>Personal</option>
+       	<option value={Label.study}>Study</option>
+       	<option value={Label.work}>Work</option>
+       	<option value={Label.other}>Other</option>
+     	</select>
+   	</div>
 
-      <div className="notes-grid" >
-       {notes.map((note) => (
-         <div
-           key={note.id}
-           className="note-item" style={{ background: theme.background}}>
-           <div className="notes-header"  >
-             <LikeButton currNote={note} />
-             <button>x</button>
-           </div>
-           <h2 style={{ color: theme.foreground}}> {note.title} </h2>
-           <p style={{ color: theme.foreground}}> {note.content} </p>
-           <p style={{ color: theme.foreground}}> {note.label} </p>
-         </div>
-       ))}
-     </div>
-     <div className="list-fav">
-        <h2>List of favorites:</h2>
+    	<div><button type="submit">Create Note</button></div>
+  	</form>
+
+  	<div className="notes-grid">
+    	{notes.map((note) => (
+      	<div
+        	key={note.id}
+        	className="note-item" style={{ background: theme.background}}
+      	>
+        	<div className="notes-header">
+            <LikeButton currNote={note} />
+          	<button>x</button>
+
+        	</div>
+            <h2 style={{ color: theme.foreground}}> {note.title} </h2>
+            <p style={{ color: theme.foreground}}> {note.content} </p>
+            <p style={{ color: theme.foreground}}> {note.label} </p>
+      	</div>
+    	))}
+        <div className="list-fav">
+            <h2>List of favorites:</h2>
         {favList.map(note => (
           <h3>{note.title}</h3>))}
-     </div>
-
-     {/* <div>
-     <h2>Toggle Theme</h2>
-          <ToggleTheme />
-     </div> */}
-    </div>
-  );
+        </div>
+  	</div>
+	</div>  );
  }
