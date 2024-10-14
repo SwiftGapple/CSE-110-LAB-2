@@ -8,6 +8,7 @@ export const dummyNotesList = [
        content: "test note 1 content",
        label: Label.other,
        favorite: false,
+       delete: false,
    },
    {
        id: 2,
@@ -15,6 +16,7 @@ export const dummyNotesList = [
        content: "test note 2 content",
        label: Label.personal,
        favorite: false,
+       delete: false,
    },
    {
        id: 3,
@@ -22,6 +24,7 @@ export const dummyNotesList = [
        content: "test note 3 content",
        label: Label.work,
        favorite: false,
+       delete: false,
    },
    {
        id: 4,
@@ -29,6 +32,7 @@ export const dummyNotesList = [
        content: "test note 4 content",
        label: Label.study,
        favorite: false,
+       delete: false,
    },
    {
        id: 5,
@@ -36,6 +40,7 @@ export const dummyNotesList = [
        content: "test note 5 content",
        label: Label.study,
        favorite: false,
+       delete: false,
    },
    {
        id: 6,
@@ -43,5 +48,6 @@ export const dummyNotesList = [
        content: "test note 6 content",
        label: Label.personal,
        favorite: false,
+       delete: false,
    },
 ]

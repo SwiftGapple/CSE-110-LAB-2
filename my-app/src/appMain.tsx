@@ -15,6 +15,7 @@ export function AppMain() {
      content: "",
      label: Label.other,
      favorite: false,
+     delete: false,
    };
   const [createNote, setCreateNote] = useState(initialNote);
 
@@ -28,17 +29,8 @@ export function AppMain() {
     const handleLike = () => {
      setLikes(currNote.favorite = !currNote.favorite);
      setLikes(!like);
-     RenderFavList();
-
-    //   setLikes(currNote.favorite = !currNote.favorite);
-    //   handleSetFav();
+     RenderFav(notes.filter(note => note.favorite === true));
     }
-
-    // useEffect(() => {   
-    // //   favList = notes.filter(note => note.favorite === true);
-    //     RenderFavList();
-    //     console.log('useEffect called');
-    // },[]);
 
     return (
       <div>
@@ -48,15 +40,8 @@ export function AppMain() {
   };
 
   const [favList,RenderFav] = useState(notes.filter(note => note.favorite === true));
-
-  const RenderFavList = () => {
-    RenderFav(notes.filter(note => note.favorite === true));
-
-    // favList = notes.filter(note => note.favorite === true); 
-    // [favList,updateFavlist] = useState(notes.filter(note => note.favorite === true);
-  };
-
-
+  const [keepList, DeleteList] = useState(notes.filter(note => note.delete === false));
+  
   const createNoteHandler = (event: React.FormEvent) => {
     event.preventDefault();
     console.log("title: ", createNote.title);
@@ -64,6 +49,20 @@ export function AppMain() {
     createNote.id = notes.length + 1;
     setNotes([createNote, ...notes]);
     setCreateNote(initialNote);
+  };
+
+  const DeleteNote = ({ currNote }: { currNote: Note }) => {
+
+    const handleDelete = () =>{
+        currNote.delete = true;
+        currNote.favorite = false;
+        DeleteList(notes.filter(note => note.delete === false));
+        RenderFav(notes.filter(note => note.favorite === true));
+    }
+ 
+    return (
+        <button onClick={handleDelete}>x</button>    
+    )
   };
 
 //   //update the list of favorite notes
@@ -118,14 +117,14 @@ export function AppMain() {
   	</form>
 
   	<div className="notes-grid">
-    	{notes.map((note) => (
+    	{keepList.map((note) => (
       	<div
         	key={note.id}
         	className="note-item" style={{ background: theme.background}}
       	>
         	<div className="notes-header">
             <LikeButton currNote={note} />
-          	<button>x</button>
+            <DeleteNote currNote={note} />
 
         	</div>
             <h2 style={{ color: theme.foreground}} contentEditable="true"> {note.title} </h2>
