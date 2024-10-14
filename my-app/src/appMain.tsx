@@ -40,7 +40,7 @@ export function AppMain() {
   };
 
   const [favList,RenderFav] = useState(notes.filter(note => note.favorite === true));
-  const [keepList, DeleteList] = useState(notes.filter(note => note.delete === false));
+//   const [keepList, DeleteList] = useState(notes.filter(note => note.delete === false));
   
   const createNoteHandler = (event: React.FormEvent) => {
     event.preventDefault();
@@ -56,7 +56,7 @@ export function AppMain() {
     const handleDelete = () =>{
         currNote.delete = true;
         currNote.favorite = false;
-        DeleteList(notes.filter(note => note.delete === false));
+        setNotes(notes.filter(note => note.delete === false));
         RenderFav(notes.filter(note => note.favorite === true));
     }
  
@@ -117,7 +117,7 @@ export function AppMain() {
   	</form>
 
   	<div className="notes-grid">
-    	{keepList.map((note) => (
+    	{notes.map((note) => (
       	<div
         	key={note.id}
         	className="note-item" style={{ background: theme.background}}
